@@ -1,0 +1,290 @@
+/* [wxMaxima: comment start ]
+[3] LYGTIS, SUSIVEDANTI Į TIESINĘ HOMOGENINĘ DIF. LYGTĮ
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+kill(all)$
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+reset(integration_constant_counter)$
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+eq:'diff(y,x)=(x+4*y-5)/(x-y-5);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+ode2(eq,y,x);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Nepavyko išspręsti su ODE2, todėl spręsime "žingsnis po žingsnio" metodu nesinaudodami
+ODE2
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+L1:num(rhs(eq))=0;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+L2:denom(rhs(eq))=0;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+solve([L1,L2]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+[x0,y0]:subst(%[1],[x,y]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+keit:w(x)=(y-y0)/(x-x0);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+akeit:solve(%,y)[1];
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+subst(akeit,eq),factor;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+ev(%,diff);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+eq1:%-w(x),factor;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+eq2:eq1/rhs(eq1)/(x-5);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+solve(denom(lhs(%))=0);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+[w1,w2]:[rhs(%[1]),rhs(%[2])];
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+eq2:num(lhs(eq2))/((w(x)-w1)*(w(x)-w2))=rhs(eq2);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+partfrac(lhs(%),w(x))=rhs(%);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+integrate(%,x);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+%−log(x−5);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+subst(keit,%);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Atsakymas:
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+ats:lhs(%)=C;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Patikrinimas:
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+depends(y,x);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+diff(ats,x);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+solve(%,'diff(y,x,1));
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+subst(%,eq);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+ratsimp(%);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+is(%);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Bendrasis integralas, gautas sprendžiant ant popieriaus:
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+(-1/2)*log(w(x)^2+3*w(x)+1)-(sqrt(5)/2)*log(((2*w(x)+3)/sqrt(5))+1)+(sqrt(5)/2)*log(((2*w(x)+3)/sqrt(5))-1)=log(x-5)+%c1;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+%−log(x−5);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+subst(keit,%);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Atsakymas:
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+ats:lhs(%)=C;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Patikrinimas:
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+depends(y,x);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+diff(ats,x);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+solve(%,'diff(y,x,1));
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+subst(%,eq);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+ratsimp(%);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+is(%);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Krypčių laukas
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+f: rhs(eq);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+load(drawdf)$
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+wxdrawdf(f, [x,-10,10], [y,-20,35],
+    [trajectory_at,1,1], field_color=gray, key="isocline", color=green, line_width=2,
+nticks=100);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Integralinės kreivės
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+load(draw)$
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+load(implicit_plot)$
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+ats:    -((sqrt(5)+5)*log((2*y)/(x-5)+sqrt(5)+3))/(2*sqrt(5))-((sqrt(5)-5)*log((2*y)/(x-5)-sqrt(5)+3))/(2*sqrt(5))-log(x-5)=C;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+f1: makelist(subst(C = k, ats), k, [1/10, 1/2, 1, 2, 5]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+wxdraw2d(grid = true,
+color = magenta, key = "c=1/10",
+implicit(f1[1], x, 0, 10, y, -10, 10),
+color = cyan, key = "c=1/2",
+implicit(f1[2], x, 0, 10, y, -10, 10),
+color = red, key = "c=1",
+implicit(f1[3], x, 0, 10, y, -10, 10),
+color = blue, key = "c=2",
+implicit(f1[4], x, 0, 10, y,  -10, 10),
+color = green, key = "c=5",
+implicit(f1[5], x, 0, 10, y,  -10, 10)),
+wxplot_size = [500,500]$
+/* [wxMaxima: input   end   ] */
+
+
+

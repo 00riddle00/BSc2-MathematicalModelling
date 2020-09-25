@@ -1,0 +1,216 @@
+/* [wxMaxima: comment start ]
+[2] HOMOGENINĖ PIRMOSIOS EILĖS DIFERENCIALINĖ LYGTIS
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+kill(all)$
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+reset(integration_constant_counter)$
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+eq:x*'diff(y,x)=((x^2+2*y^2)^(1/2)+y);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+eq1:solve(eq,'diff(y,x))[1];
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Nenaudojant ODE2 funkcijos
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+lambda: 1/x$
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+eq2:lhs(eq1)=subst([x=lambda*x,y=lambda*y], rhs(eq1));
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+subst(y=u(x)*x,eq2);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+ev(%,diff);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+ratsimp(%-u(x));
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+%/rhs(%)/x;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+integrate(%,x);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+/* integravimas ranka */;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+res: (1/sqrt(2))*log(abs(sqrt(2)*u(x) +sqrt(2*u(x)^2+1))) = log(abs(x)) + %c1;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+%-log(abs(x));
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+logcontract(%);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+subst([u(x)=y/x,%c1=log(C)],%);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Atsakymas:
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+ats:map(exp,%), ratsimp;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Naudojant ODE2 funkciją
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+ats:ode2(eq,y,x);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+%/x/%c;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Atsakymas:
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+ats:rhs(%)=%c;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+logarc(%), ratsimp;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Patikrinimas:
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+depends(y,x);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+diff(ats,x);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+eq3:solve(%,diff(y,x));
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+subst(%,eq), ratsimp;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+is(%);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+f1:rhs(eq3[1]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Krypčių laukas
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+load(drawdf);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+wxdrawdf(f1, [x, -1,1], [y,-1,1],
+[trajectory_at,1,1], field_color=gray, key="isocline", color=green, line_width=2,
+nticks=200);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+f:makelist(subst(%c=k,ats),k,[-2,-1,-1/2,1/2,1,2]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Integralinės kreivės
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+load(draw)$
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+wxdraw2d(grid = true,
+color = red, key = "c=-2",
+implicit(f[1], x, -1, 1, y, -2, 2),
+color = blue, key = "c=-1",
+implicit(f[2], x, -1, 1, y, -2, 2),
+color = green, key = "c=-1/2",
+implicit(f[3], x, -1, 1, y, -2, 2),
+color = violet, key = "c=1/2",
+implicit(f[4], x, -1, 1, y, -2, 2),
+color = brown, key = "c=1",
+implicit(f[5], x, -1, 1, y, -2, 2),
+color = orange, key = "c=2",
+implicit(f[6], x, -1, 1, y, -2, 2)),
+wxplot_size = [500,500]$
+/* [wxMaxima: input   end   ] */
+
+
+

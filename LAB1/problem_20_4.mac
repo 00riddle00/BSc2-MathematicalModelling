@@ -1,0 +1,108 @@
+/* [wxMaxima: comment start ]
+[4] TIESINĖ PIRMOSIOS EILĖS DIFERENCIALINĖ LYGTIS
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+reset()$ kill(all)$
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+eq:'diff(y(x),x)+x*y(x)=−x^3;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+eq1:solve(eq,'diff(y(x),x))[1];
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+[x0,y0]:[1,1/%e];
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Naudojant ODE2 funkciją
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+ats:ode2(eq,y(x),x),expand;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+subst([x=x0,y(1)=y0],ats);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+solve(%,%c), expand;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Atsakymas:
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+ats_kosi: subst(%,ats),expand;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Patikrinimas:
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+subst(ats_kosi,eq);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+ ev(%, nouns);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+expand(%);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+is(%);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Sprendinio grafikas ir krypčių laukas
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+load(drawdf)$
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+f:subst(y(x)=y,rhs(eq1));
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+ wxdrawdf(f,[x,0,2],[y,0,2],
+color=red,
+explicit(rhs(ats_kosi),x,0,2),
+color=blue,
+point_type=filled_circle,
+point_size=2,
+points([[x0,y0]])
+);
+/* [wxMaxima: input   end   ] */
+
+
+
