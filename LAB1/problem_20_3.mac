@@ -225,7 +225,7 @@ is(%);
 
 
 /* [wxMaxima: comment start ]
-Krypčių laukas
+Krypčių laukas (lyg ir ne toks brėžinys turėtų gautis pgl. dėst., pradžioje "tikslumo" (?) trūksta Maximai, todėl tokie "dantukai" kairėj)
    [wxMaxima: comment end   ] */
 
 
@@ -247,7 +247,7 @@ nticks=100);
 
 
 /* [wxMaxima: comment start ]
-Integralinės kreivės
+Integralinės kreivės (lyg ir ne tokios turi gautis pgl. dėst.)
    [wxMaxima: comment end   ] */
 
 

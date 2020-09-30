@@ -4,33 +4,33 @@ SU ATSKIRIAMAIS KINTAMAISIAIS
    [wxMaxima: comment end   ] */
 
 
+/* [wxMaxima: input   start ] */
+eq:2*x+x*y^2+(4-x^2)^(1/2)*'diff(y,x)=0;
+/* [wxMaxima: input   end   ] */
+
+
 /* [wxMaxima: comment start ]
 Nenaudojant ODE2 funkcijos
    [wxMaxima: comment end   ] */
 
 
 /* [wxMaxima: input   start ] */
-eq:2*x+x*y^2+(4-x^2)^(1/2)*'diff(y,x)=0;
+eq-(x*y^2+2*x);
 /* [wxMaxima: input   end   ] */
 
 
 /* [wxMaxima: input   start ] */
-eq:eq-(x*y^2+2*x);
+factor(%);
 /* [wxMaxima: input   end   ] */
 
 
 /* [wxMaxima: input   start ] */
-eq:factor(eq);
+eq1:%/(y^2+2)/((4-x^2)^(1/2));
 /* [wxMaxima: input   end   ] */
 
 
 /* [wxMaxima: input   start ] */
-eq:eq/(y^2+2)/((4-x^2)^(1/2));
-/* [wxMaxima: input   end   ] */
-
-
-/* [wxMaxima: input   start ] */
-subst([y=y(x),dx=1,dy=diff(y(x),x)],eq);
+subst([y=y(x),dx=1,dy=diff(y(x),x)],eq1);
 /* [wxMaxima: input   end   ] */
 
 
@@ -59,6 +59,11 @@ lhs(%)=C;
 /* [wxMaxima: input   end   ] */
 
 
+/* [wxMaxima: comment start ]
+Atsakymas:
+   [wxMaxima: comment end   ] */
+
+
 /* [wxMaxima: input   start ] */
 ats:subst(y(x)=y,%);
 /* [wxMaxima: input   end   ] */
@@ -70,18 +75,12 @@ Naudojant ODE2 funkciją
 
 
 /* [wxMaxima: input   start ] */
-eq:2*x+x*y^2+(4-x^2)^(1/2)*'diff(y,x)=0;
-
+eq2:solve(eq,'diff(y,x))[1];
 /* [wxMaxima: input   end   ] */
 
 
 /* [wxMaxima: input   start ] */
-eq1:solve(%,'diff(y,x))[1];
-/* [wxMaxima: input   end   ] */
-
-
-/* [wxMaxima: input   start ] */
-ode2(eq1,y,x);
+ode2(eq2,y,x);
 /* [wxMaxima: input   end   ] */
 
 
@@ -131,7 +130,7 @@ solve(%,'diff(y,x));
 
 
 /* [wxMaxima: input   start ] */
-subst(%,eq1);
+subst(%,eq2);
 /* [wxMaxima: input   end   ] */
 
 
@@ -141,7 +140,7 @@ is(%);
 
 
 /* [wxMaxima: comment start ]
-Nubrėšime keletą integralinių kreivių, kai C=1/10, C=1/2, C=1.
+Nubrėšime keletą integralinių kreivių, kai C=1/10, C=1/2, C=1. (Lyg ir ne toks brėžinys turėtų gautis pagal dėst.)
    [wxMaxima: comment end   ] */
 
 
