@@ -1,0 +1,166 @@
+/* [wxMaxima: comment start ]
+[1] Antros eilės dif. lygties sprendimas
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: comment start ]
+20 variantas:  x'' + 9x = 2sin(t) - 6cos(2t),  x(0) = 0,   x'(0) = 4
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+eq:'diff(x,t,2)+9*x=2*sin(t)-6*cos(2*t);
+
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Naudojant ODE2 funkciją
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+ode2(eq,x,t);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Pertvarkome šį sprendinį
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+expand(%);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Įvedame pradines sąlygas
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+ic2(%, t=0, x=0, 'diff(x,t)=4);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+ats:rhs(%);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Patikrinimas:
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+subst(x=ats,eq);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+ev(%, diff);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+expand(%);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+is(%);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+subst(t=0,ats);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+subst(t=0,diff(ats,t));
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Sprendinio tyrimas:
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+wxplot2d([ats], [t,-10,10])$
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+wxplot2d(ats, [t,0,2*%pi], [y,-5,6])$
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Ar sprendinys  periodinis?
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+ats-subst(t=t+2*%pi,ats);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+trigexpand(%);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+expand(%);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+is(%=0);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Rasime sprendinio amplitudę, kai 0 < t < 2*%pi.
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+f1:diff(ats,t);                                             /* skaičiuojame išvestinę */
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+t1:find_root(f1=0, t, 3, 4);                        /* ieškome "išvestinė=0" šaknies intervale [3,4] 
+                                                                     (iš grafiko matome, kad šiame intervale yra
+                                                                     minimumo taškas) */
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+f_min:subst(t=t1,ats);                             /* skaičiuojame funkcijos minimalią reikšmę */
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+t2:find_root(f1=0, t, 4, 5);                        /* ieškome "išvestinė=0" šaknies intervale [4,5] 
+                                                                     (iš grafiko matome, kad šiame intervale yra
+                                                                      maksimumo taškas) */
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+f_max:subst(t=t2,ats);                            /* skaičiuojame funkcijos maksimalią reikšmę */
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+Amplitude:f_max-f_min;                        /* suskaičiuojame amplitudę */
+/* [wxMaxima: input   end   ] */
+
+
+
