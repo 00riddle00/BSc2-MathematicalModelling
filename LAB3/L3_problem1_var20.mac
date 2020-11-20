@@ -1,0 +1,178 @@
+/* [wxMaxima: comment start ]
+[1] DALINIŲ IŠVESTINIŲ LYGTIS
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: comment start ]
+Suvedame lygtį į kanoninį pavidalą ir randame bendrąjį sprendinį.
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+load(pdiff)$
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Kintamųjų keitimui apibrėžiame funkciją "changevars"
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+changevars(eq,tr,itr):=block([a,b,c,d,eq1],
+[a,b,c]:[coeff(lhs(eq),'diff(u,x,2)),coeff(lhs(eq),'diff(u,x,1,y,1))/2,coeff(lhs(eq),'diff(u,y,2))],
+d:b^2-a*c,
+depends(u,[ξ,η],ξ,[x,y],η,[x,y]),
+append(diff(tr,x),diff(tr,x,2),diff(tr,y),diff(tr,y,2),diff(tr,x,1,y,1)),
+subst(%%,ev(eq,nouns)),
+subst(itr,%%),
+ratsimp(%%),
+trigsimp(%%),
+expand(%%),
+eq1:trigreduce(%%),
+if d<0 then
+(solve(eq1,diff(u,ξ,2))[1],
+factor(%%+diff(u,η,2)))
+elseif d=0 then factor(eq1)
+else
+(solve(eq1,diff(u,ξ,1,η,1))[1],
+factor(%%)),
+lhs(%%)-rhs(%%)=0
+)$
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+eqtype(eq):=block([a,b,c,d],
+a:coeff(lhs(eq),'diff(u,x,2)),
+b:coeff(lhs(eq),'diff(u,x,1,y,1))/2,
+c:coeff(lhs(eq),'diff(u,y,2)),
+d:b^2-a*c,
+if d>0 then "equation is hyperbolic"
+elseif d=0 then "equation is parabolic"
+elseif d<0 then "equation is elliptic"
+)$
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+eq:1*'diff(u,x,2)+32*'diff(u,x,1,y,1)+192*'diff(u,y,2)=0;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+[a,b,c]:[coeff(lhs(eq),'diff(u,x,2)),coeff(lhs(eq),'diff(u,x,1,y,1))/2,coeff(lhs(eq),'diff(u,y,2))];
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+d:b^2-a*c;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+eqtype(eq);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+cheq1:'diff(y,x)=(b+sqrt(b^2-a*c))/a;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+ode2(cheq1,y,x);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+r1:solve(%,%c)[1];
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+cheq2:'diff(y,x)=(b-sqrt(b^2-a*c))/a;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+ode2(cheq2,y,x);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+r2:solve(%,%c)[1];
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Gavome transformacijos formules:
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+tr:[ξ=rhs(r1),η=rhs(r2)];
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+itr:solve(tr,[x,y])[1];
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+eq1:changevars(eq,tr,itr);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+canonical_form:%;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Bendrasis sprendinys:
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+u=C1(ξ)+C2(η);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Atsakymas:
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+ats:subst(tr,%);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Patikrinimas:
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+subst(ats,eq);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+ ev(%,diff);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+ expand(%);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+is(%);
+/* [wxMaxima: input   end   ] */
+
+
+
