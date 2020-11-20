@@ -1,0 +1,104 @@
+/* [wxMaxima: comment start ]
+[3] PIRMOS EILĖS NETIESINIŲ DIFERENCIALINIŲ LYGČIŲ SISTEMA
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: comment start ]
+Lotkos-Volteros lygtys (plėšrūno-aukos lygtys):
+
+x'=(a - b*y)*x,
+y'=(-c + d*x)*y, 
+
+x(0) = x0, 
+y(0) = y0,
+
+x - auka,
+y - plėšrūnas.
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+load(drawdf)$
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+ [a,b,c,d]:[4,3,4,3]$
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+eqs:[(a-b*y)*x,(-c+d*x)*y];
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Pusiausvyros taškai:
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+solve(eqs,[x,y]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Imame netrivialųjį pusiausvyros tašką:
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+C:subst(%[2],[x,y]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Fazinis portretas plėšrūnų-aukų įvairiomis pradinėmis sąlygomis 
+x0 (pradinis aukų skaičius) ir y0 (pradinis plėšrūnų skaičius).
+Trajektorijos yra uždaros.
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+ wxdrawdf(eqs, [x,0,5], [y,0,5],
+ line_width=2,
+ color=green, key = "x0=1, y0=2", soln_at(1,2),
+ color=blue, key = "x0=1, y0=3", soln_at(1,3),
+ color=purple, key = "x0=1, y0=4", soln_at(1,4),
+ point_type = filled_circle,
+ color=red,
+ xlabel="x (aukos)", ylabel="y (plėšrūnai)",
+ key = "Pusiausvyros taškas",
+ points([C])
+)$
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+sol: rk(eqs,[x,y],[1,3],[t,0,8,0.02])$
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Ištiesintas dif. lygčių sistemos sprendinys:
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+wxplot2d ([
+        [discrete,makelist([p[1],p[2]],p,sol)],
+        [discrete,makelist([p[1],p[3]],p,sol)]
+    ],
+    [legend,"aukos", "plėšrūnai"],
+ 
+    [xlabel,"Laikas, t"],[ylabel,"Populiacija"]
+)$
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+wxplot2d ([discrete,makelist([p[2],p[3]],p,sol)], [xlabel,"x"],[ylabel,"y"])$
+/* [wxMaxima: input   end   ] */
+
+
+
