@@ -1,0 +1,286 @@
+/* [wxMaxima: comment start ]
+Ekvivalentumai:
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+sin_pi_k: sin(%pi*k)=0;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+sin_pi_m: sin(%pi*m)=0;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+sin_2pi_k: sin(2*%pi*k)=0;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+cos_pi_k: cos(%pi*k)=(-1)^k;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+cos_pi_m: cos(%pi*m)=(-1)^m;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Integravimas [1]
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+fn1:(1-cos(2*%pi*k*x/2))/2;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+int1:integrate(fn1, x);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+ratsimp(%);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+bound1_right:subst(x=2, int1);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+bound1_left:subst(x=0, int1);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+int1:bound1_right - bound1_left;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+int1:subst(sin_2pi_k, int1);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Integravimas [2]
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+fn2: sin(%pi*k*x/2)*sin(%pi*m*x/2);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+int2:integrate(fn2,x);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+%,trigexpand=true,trigexpandplus=true,expand;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+int2:ratsimp(%);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+bound2_right:subst(x=2, int2);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+bound2_left:subst(x=0, int2);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+int2:bound2_right - bound2_left;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+int2:subst([sin_pi_k, sin_pi_m], %);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+is(int2=0);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Integravimas [3]
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+fn3: ((x^2)-2*x)*sin(%pi*m*x/2);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+int3:integrate(fn3,x);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+int3:ratsimp(%);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+bound3_right:subst(x=2, int3);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+bound3_left:subst(x=0, int3);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+int3:bound3_right - bound3_left;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+ratsimp(%);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+subst(sin_pi_m, %);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+int3:subst(cos_pi_m, %);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Integravimas [4]
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+fn4: (-6*h+x+1)*sin(%pi*m*x/2);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+h=(-t)*x+(2*t+2);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+subst(%, fn4);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+fn4:ratsimp(%);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+int4:integrate(fn4,x);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+int4:ratsimp(int4);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+bound4_right:subst(x=2, int4);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+ratsimp(%);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+bound4_left:subst(x=0, int4);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+int4:bound4_right - bound4_left;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+expand(%);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+ratsimp(%);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+int4:subst(sin_pi_m, %);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+ratsimp(%);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+int4:subst(cos_pi_m, %);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Integravimas [5]
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+fn5:(-24*s+18*(-1)^k-22)/(%pi*k) * %e^((((%pi*k/2)^2)+6)*s);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+int5:integrate(fn5,s);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+int5:ratsimp(%);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+bound5_right:subst(s=t, int5);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+bound5_left:subst(s=0, int5);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+int5:bound5_right - bound5_left;
+/* [wxMaxima: input   end   ] */
+
+
+

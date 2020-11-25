@@ -1,0 +1,496 @@
+/* [wxMaxima: comment start ]
+[3] KRAŠTINIO UŽDAVINIO ŠILUMOS LAIDUMO LYGČIAI SPRENDIMAS FURJĖ, ARBA KINTAMŲJŲ ATSKYRIMO, METODU (20 VARIANTAS).
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+load(draw);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: title   start ]
+1 Uždavinio formulavimas
+   [wxMaxima: title   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+[a,alpha,f,L,u0,u1,u2] : [1,6,3,2,x^2-2*x+2,2*t+2,2];
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+eq:diff(u(x,t),t)=a^2*diff(u(x,t),x,2)-alpha*u(x,t)+f;
+ic:u(x,0)=u0;    /* "ic" - initial condition            */
+bc1:u(0,t)=u1;  /* bc1 - boundary condition 1 */
+bc2:u(L,t)=u2;  /* bc2 - boundary condition 2 */
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: title   start ]
+2 Tikrinės reikšmės ir tikrinės funkcijos
+   [wxMaxima: title   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Tikrinių reikšmių uždavinio
+v''(x) + λv(x) = 0,
+v(0)=0, v(L)=0
+tikrinės funkcijos(tf) ir tikrinės reikšmės(tr) yra:
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+define(tf(k),sqrt(2/L)*sin(%pi*k*x/L));
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Dėstytojas tf(k) pažymėjo v_k
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+v_k:rhs(%);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+define(tr(k),((%pi*k)/L)^2);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Dėstytojas tr(k) pažymėjo λ_k
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+λ_k:rhs(%);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Šių formulių išvedimą kompiuteriu žr. A. Domarko lab. darbe (5-7 psl.) 
+
+Nuoroda: https://klevas.mif.vu.lt/aleksas/MatematinisModeliavimas/3%20LaboratorinisDarbas/silumos-new.pdf
+
+Detalus tikrinių funkcijų ir tikrinių reikšmių išvedimas pateiktas raštu.
+
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: comment start ]
+Tikrinės funkcijos sudaro ortonormuotą sistemą Hilberto erdvėje L[2](0,L).
+Šioje erdvėje norma apibrėžiama lygybe:
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+norma(u):=sqrt(integrate(u^2,x,0,L));
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Skaliarinė sandauga:
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+ss(u,v):=integrate(u*v,x,0,L);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+declare([k,m],integer)$
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+norma(tf(k));
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+ss(tf(k),tf(m));
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+ss(tf(k),tf(k));
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: title   start ]
+3 Suvedimas į uždavinį su nulinėmis kraštinėmis sąlygomis
+   [wxMaxima: title   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Atliksime keitinį u(x,t)=w(x,t) + h(x,t), kad gautume uždavinį su nulinėmis kraštinėmis sąlygomis.
+Čia h(x,t) yra tiesė pagal x, einanti per taškus (0,u1) ir (L,u2), nes h(0)=u1 ir h(L)=u2:
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+define(h(x,t),((u2−u1)*x)/L+u1);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+h(0,t);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+h(L,t);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Suvedimui į uždavinį su homogeninėmis kraštinėmis sąlygomis atliksime keitinį
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+keit:u(x,t)=w(x,t)+h(x,t);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Apskaičiuojame naują lygties laisvąjį narį g (vietoje f):
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+subst(keit,eq);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+ev(%, nouns);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+expand(rhs(%)-lhs(%));
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+ g:subst(w(x,t)=0,%);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Apskaičiuojame naują pradinę funkciją (vietoje u0), kurią žymėsime w0:
+
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+subst([t=0,ic],keit);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+solve(%,w(x,0) )[1];
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+w0:rhs(%);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Gavome uždavinį su nulinėmis kraštinėmis sąlygomis funkcijai w(x,t):
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+eqn:diff(w(x,t),t)=a^2*diff(w(x,t),x,2)−alpha*w(x,t)+g;
+icn:w(x,0)=w0; /* "ic new" */
+bc1n:w(0,t)=0; /* "bc1 new" */
+bc2n:w(L,t)=0; /* "bc2 new" */
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: title   start ]
+4 Sprendinio radimas
+   [wxMaxima: title   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Uždavinio su nulinėmis kraštinėmis sąlygomis sprendinys randamas pavidalu
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+w(x,t)=sum(T[k](t)*'tf(k),k,1,inf);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Koeficientai T[k](t) yra uždavinių
+y'(t) + a^2·tr(k)·y(t) + alpha·y(t)= d(k), y(0)=c(k), k = 1, 2, ...
+sprendiniai. Čia
+d(k) = integrate(g·tf(k),x,0,L),
+c(k) = integrate(w0·tf(k),x,0,L),
+g = d(1)·tf(1) + d(2)·tf(2) + ...   (1)
+w0= c(1)·tf(1) + c(2)·tf(2) +...   (2)
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: comment start ]
+skaičiuojame d(k). Pirmas daugiklis visada bus = 1.
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+d(k):=1/integrate(tf(k)^2,x,0,L)*integrate(g*tf(k),x,0,L);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+skaičiuojame c(k). Pirmas daugiklis visada bus = 1.
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+ c(k):=1/integrate(tf(k)^2,x,0,L)*integrate(w0*tf(k),x,0,L);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Įrodymui pakanka lygybes (1) ir (2) skaliariškai padauginti iš tf(k)
+ir atsižvelgti, kad tikrinių funkcijų sistema yra ortogonali.
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+ratsimp(c(k));
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+makelist(c(k),k,1,10);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+ratsimp(d(k));
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+makelist(d(k),k,1,10);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Duotojo uždavinio sprendinys randamas pavidalu (žr. [1], p. 196)
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+ u(x,t)=sum(T[k](t)*'tf(k),k,1,inf)+h(x,t);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Koeficientai T[k](t) yra uždavinių
+diff(y,t)' + a^2*tr(k)*y + alpha*y= d(k), y(0)=c(k), k = 1, 2, ...
+sprendiniai.
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: comment start ]
+Skaičiuojame w(x,t). Vietoj begalinės sumos imame sumą iki 5. Tai mums duoda pakankamą tikslumą. 
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+S:0$
+for k thru 5 do
+(
+ode2('diff(y,t)+a^2*tr(k)*y + alpha*y=d(k),y,t),
+ic1(%%, t=0, y=c(k)),
+ratsimp(%%),
+S:S+rhs(%%)*tf(k)
+)$
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+S: expand(S);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Užrašome galutinį sprendinį u(x,t)
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+spr:u(x,t)=S+h(x,t);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: title   start ]
+ 5 Grafinis sprendinio vaizdavimas
+   [wxMaxima: title   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+define(ats(x,t),rhs(spr))$
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Trimatis brėžinys:
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+wxplot3d(ats(x,t), [x,0,L], [t,0,2])$
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Iš grafiko matosi, kad esant pradinei sąlygai ("ic") t = 0, kai x kinta nuo 0 iki 2,
+z-x plokštumoje matome atvaizduotą parabolę z = u(x,0)=x^2-2·x+2, ir matome, 
+kad teisinga, kad kai x = 0, u(0,0) = 2, o kai x = 2, u(2,0) = 2 taip pat.
+
+Taip pat matome, kad esant pradinėms kraštinėms sąlygoms:
+    x = 0, u(0,t) = 2·t+2 ("bc1")
+    x = 2, u(2,t) = 2        ("bc2")
+grafike tai irgi atsispindi: kai x = 0, plokštumoje z-t matome tiesę z = 2·t+2,
+o kai x = 2, plokštumoje z-t matome tiesę z = 2.
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: comment start ]
+Apskaičiuojame sprendinio ir h(x,t) reikšmes taške x=0.5, t=2:
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+ev(spr,[x=0.5,t=2]),numer;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+ev(h(x,t),[x=0.5,t=2]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+subst(t=0,spr),ratsimp;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+fpprintprec:4$
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Pasirenkame animacijos parametro t reikšmių sąrašą. Arčiau nulio reikšmes imame tankiau.
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+t_list:append(makelist(t*0.0001,t,0,100,10),makelist(t*0.1,t,1,20,2));
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+with_slider_draw(
+ t,t_list,
+ yrange=[−3,5],
+ key=string(u(t,x)),
+ explicit(ats(x,t),x,0,L),
+ key=string(u0),
+ color=red,
+ explicit(u0,x,0,L),grid=true);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Animacijos mometus dar galima pavaizduoti taip:
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+set_draw_defaults( xrange = [0, 2],
+ yrange = [−3,5],
+ xtics=1/2,
+ ytics = 2,
+ color = blue,
+ grid = true)$
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+sc1: gr2d(title="u(x,0)", explicit(ats(x,0),x,0,2))$
+sc2: gr2d(title="u(x,0.001)", explicit(ats(x,0.001),x,0,2))$
+sc3: gr2d(title="u(x,0.01)", explicit(ats(x,0.01),x,0,2))$
+sc4: gr2d(title="u(x,1)", explicit(ats(x,1),x,0,2))$
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+wxdraw(sc1, sc2, sc3, sc4, columns = 2)$
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: title   start ]
+Patikrinimas
+   [wxMaxima: title   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Patikriname pradinę sąlygą:
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+ subst(t=0,spr),ratsimp;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+wxplot2d([u0,rhs(spr)], [x,0,L],[box, false],[legend, "f", "S"]),t=0$
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Matome, kad dalinė suma S, kai t=0, gerai aproksimuoja pradinę funkciją f.
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: comment start ]
+Patikriname kraštines sąlygas:
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+ev(S,x=0);
+ev(S,x=L);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+subst(spr,eq)$
+ev(%,nouns)$
+expand(lhs(%)-rhs(%))$
+ratsimp(%);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+eq;
+/* [wxMaxima: input   end   ] */
+
+
+
